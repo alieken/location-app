@@ -17,6 +17,7 @@
                 <th scope="col">Boylam</th>
                 <th scope="col">Renk</th>
                 <th scope="col">Konum</th>
+                <th scope="col">Rota</th>
                 <th scope="col">Düzelt</th>
                 <th scope="col">Sil</th>
               </tr>
@@ -30,6 +31,7 @@
                         <td>{{ $row->boylam }}</td>
                         <td style="background-color: #{{ $row->renk }};"></td>
                         <td><a href="{{ route('konums.konum', $row->id) }}" class="btn btn-primary">Konum</a></td>
+                        <td><a href="{{ route('konums.rota', $row->id) }}" class="btn btn-primary">Rota</a></td>
                         <td><a href="{{ route('konums.edit', $row->id) }}" class="btn btn-warning">Düzenle</a></td>
                         <td>
                             <form action="{{ route('konums.delete', $row->id) }}" method="POST">

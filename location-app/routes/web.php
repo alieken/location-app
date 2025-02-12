@@ -23,3 +23,4 @@ Route::get('/edit/{id}', [KonumController::class, 'edit'])->name('konums.edit');
 Route::post('/edit/{id}', [KonumController::class, 'edit_done'])->name('konums.edit_done');
 Route::delete('/delete/{id}', [KonumController::class, 'delete'])->name('konums.delete');
 Route::get('/konum/{id}', [KonumController::class, 'konum'])->name('konums.konum');
+Route::get('/rota/{id}', [KonumController::class, 'rota'])->name('konums.rota');
