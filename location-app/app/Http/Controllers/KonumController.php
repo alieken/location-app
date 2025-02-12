@@ -57,32 +57,37 @@ class KonumController extends Controller
 
         $table = Konum::where("id", "!=", $id)->orderBy("id", "desc")->get();
 
-        $table2 = Konum::where("id", "!=", $id)->orderBy("id", "desc")->get();
-
+        $table2 = Konum::where("id", "!=", $id)->orderBy("id", "desc")->get()->toArray();
         $rotalar = array();
 
         $lat = $veri->enlem;
         $lng = $veri->boylam;
         array_push($rotalar, [$lat, $lng]);
-        $hesapla = PHP_INT_MAX;
         $ind = 0;
         $ekle_ind = "";
 
        
         while(count($table2) != 0){
             $ind = 0;
-            foreach ($table2 as $tb) {
-                $hesapla_lat = $tb->enlem;
-                $hesapla_lng = $tb->boylam;
+            $hesapla = 9E18;
 
+            foreach ($table2 as $tb) {
+                $hesapla_lat = $table2[$ind]["enlem"];
+                $hesapla_lng = $table2[$ind]["boylam"];
+
+                
                 $uzunluk = $this->vincentyGreatCircleDistance($lat, $lng, $hesapla_lat, $hesapla_lng);
-                if($uzunluk < $hesapla){
+                //echo "lat1 : " . $lat . " lon1 : " . $lng . " hesaplatlat : " . $hesapla_lat . " hesaplalng : " . $hesapla_lng . " uzunluk : " . $uzunluk . " hesapla : " . $hesapla . " ad : " . $table2[$ind]["konumAd"] . "<br><br>";
+                if(floatval($uzunluk) < $hesapla){
                     $ekle_ind = $ind;
+                    $hesapla = floatval($uzunluk);
                 }
                 $ind++;
             }
+            $lat = $table2[$ekle_ind]["enlem"];
+            $lng = $table2[$ekle_ind]["boylam"];
             array_push($rotalar, [$table2[$ekle_ind]["enlem"], $table2[$ekle_ind]["boylam"]]);
-            unset($table2[$ekle_ind]);
+            array_splice($table2, $ekle_ind, 1);
         }
 
         return view('konum.rota', ["veri" => $veri, "table" => $table, "rota" => $rotalar]);
