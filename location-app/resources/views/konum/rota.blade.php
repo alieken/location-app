@@ -17,6 +17,12 @@
 
     L.marker([{{ $veri->enlem }}, {{ $veri->boylam }}], {icon: icon}).addTo(map);
 
+    var greenIcon = L.icon({
+        iconUrl: "{{ asset('img/green.png') }}",
+        iconSize:     [20, 20], // size of the icon
+    });
+    L.marker([{{ $veri->enlem }}, {{ $veri->boylam }}], {icon: greenIcon}).addTo(map);
+
     @foreach( $table as $tb)
         var myCustomColour = '#{{ $tb->renk }}'
 
@@ -34,7 +40,11 @@
 
     var polyline = L.polyline(latlngs, {color: 'red'}).addTo(map);
        
-   
+    var redIcon = L.icon({
+        iconUrl: "{{ asset('img/red.png') }}",
+        iconSize:     [20, 20], // size of the icon
+    });
+    L.marker([latlngs[latlngs.length-1][0], latlngs[latlngs.length-1][1]], {icon: redIcon}).addTo(map);
     
 </script>
 </x-layout>
